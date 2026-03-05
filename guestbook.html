@@ -3,25 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GUESTBOOK - 익명 한줄평</title>
+    <title>GUESTBOOK - 익명 게시판</title>
     <style>
         body { font-family: 'Apple SD Gothic Neo', sans-serif; text-align: center; background: #f0f4ff; margin: 0; padding: 40px 20px; }
-        .back-home { position: fixed; top: 20px; left: 20px; width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; text-decoration: none; }
+        .fixed-btn { position: fixed; left: 20px; width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; text-decoration: none; }
+        .board-card { max-width: 600px; margin: 0 auto; background: white; padding: 25px; border-radius: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .msg-box { background: #f9fbff; padding: 15px; border-radius: 15px; margin-top: 15px; text-align: left; border: 1px solid #eef2ff; position: relative; }
+        .admin-tag { color: #7baaff; font-weight: 800; font-size: 12px; margin-right: 5px; }
+        .btn-small { font-size: 11px; color: #999; border: none; background: none; cursor: pointer; margin-right: 8px; }
+        .btn-small.delete { color: #ff6b6b; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-home">🏠</a>
 
-    <h2>💬 익명 한줄평 게시판</h2>
-    
-    <div id="board-container" style="max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);"></div>
+    <a href="index.html" class="fixed-btn" style="top: 20px;">🏠</a>
+
+    <div class="board-card">
+        <h2 style="color: #333; margin-bottom: 25px;">💬 익명 한줄평</h2>
+        
+        <div style="margin-bottom: 30px;">
+            <textarea id="input-text" placeholder="비방글은 예고 없이 삭제될 수 있습니다." style="width: 100%; height: 80px; border: 1px solid #eee; border-radius: 12px; padding: 12px; box-sizing: border-box; resize: none;"></textarea>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <input type="password" id="input-pw" placeholder="비밀번호(관리자)" style="width: 110px; padding: 6px; border: 1px solid #eee; border-radius: 6px; font-size: 12px;">
+                <button onclick="savePost()" style="background: #7baaff; color: white; border: none; padding: 8px 25px; border-radius: 10px; font-weight: bold; cursor: pointer;">등록하기</button>
+            </div>
+        </div>
+
+        <div id="display-list"></div>
+    </div>
 
     <script>
-        fetch('board.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('board-container').innerHTML = data;
-            });
+        const MASTER_KEY = "1234"; // 쫌좀님! 여기서 비밀번호를 꼭 바꾸세요!
+
+        function savePost() {
+            const txt = document.getElementById('input-text').value;
+            const pw = document.getElementById('input-pw').value;
+            if(!txt) return alert("내용을 입력해주세요!");
+
+            const isAdmin = (pw === MASTER_KEY);
+            const list = document.getElementById('display-list');
+            
+            const item = document.createElement('div');
+            item.className = "msg-box";
+            
+            item.innerHTML = `
+                <div>${isAdmin ? '<span class="admin-tag">[관리자]</span>' : '<span style="font-weight:700; font-size:12px;">익명</span>'} <small style="color:#ccc; margin-left:5px;">방금 전</small></div>
+                <div style="margin-top:8px; font-size:14px; color:#444;">${txt}</div>
+                <div style="margin-top:12px;">
+                    <button onclick="this.closest('.msg-box').remove()" class="btn-small delete">삭제</button>
+                    ${isAdmin ? '<button onclick="addReply(this)" class="btn-small" style="color:#7baaff;">답글달기</button>' : ''}
+                </div>
+                <div class="reply-wrap" style="margin-top:10px; padding-left:15px; border-left:2px solid #7baaff;"></div>
+            `;
+
+            list.prepend(item);
+            document.getElementById('input-text').value = "";
+            document.getElementById('input-pw').value = "";
+        }
+
+        function addReply(btn) {
+            const comment = prompt("관리자 답글을 입력하세요.");
+            if(comment) {
+                const wrap = btn.parentElement.nextElementSibling;
+                wrap.innerHTML += `<div style="font-size:13px; margin-top:5px;"><b style="color:#7baaff;">↳ 관리자:</b> ${comment}</div>`;
+            }
+        }
     </script>
 </body>
 </html>
