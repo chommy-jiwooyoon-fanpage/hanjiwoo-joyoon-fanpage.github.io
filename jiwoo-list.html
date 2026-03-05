@@ -12,10 +12,10 @@
         }
         .header-title { font-size: 1.8rem; font-weight: 800; color: #333; margin-bottom: 30px; }
         
-        /* 쫌좀님이 원하신 아이콘 타일 레이아웃 */
+        /* 쫌좀님이 원하신 격자형 타일 레이아웃 */
         .work-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 배치 */
+            grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 */
             gap: 20px;
             max-width: 500px;
             margin: 0 auto;
@@ -26,26 +26,30 @@
             transition: 0.3s;
         }
 
+        /* 작품 아이콘 박스 */
         .work-icon {
             width: 100%;
-            aspect-ratio: 1 / 1; /* 정사각형 아이콘 모양 */
-            background: #f0f0f0;
-            border-radius: 20px;
+            aspect-ratio: 1 / 1;
+            background: #f8f9fa;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            margin-bottom: 10px;
+            font-size: 3.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
+            border: 1px solid #eee;
         }
 
         .work-item:hover .work-icon {
-            transform: scale(1.05);
+            transform: translateY(-5px);
             background: #7baaff;
             color: white;
+            border-color: #7baaff;
         }
 
-        .work-title { font-size: 0.9rem; font-weight: 600; color: #555; }
+        .work-title { font-size: 0.95rem; font-weight: 700; color: #333; }
+        .back-link { margin-top: 60px; display: block; text-decoration: none; color: #bbb; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -53,19 +57,18 @@
     <div class="header-title">HAN JI WOO</div>
 
     <div class="work-grid">
-        <div class="work-item" onclick="location.href='jiwoo-post-1.html'">
-            <div class="work-icon">🎞️</div>
-            <div class="work-title">작품 01</div>
-        </div>
-
-        <div class="work-item" onclick="location.href='jiwoo-post-2.html'">
+        <div class="work-item" onclick="location.href='jiwoo-onoff3.html'">
             <div class="work-icon">🎬</div>
-            <div class="work-title">작품 02</div>
+            <div class="work-title">ONnOFF 3</div>
         </div>
 
+        <div class="work-item" onclick="location.href='jiwoo-work2.html'">
+            <div class="work-icon">🎞️</div>
+            <div class="work-title">다음 작품</div>
         </div>
+    </div>
 
-    <p style="margin-top: 50px;"><a href="menu.html" style="text-decoration: none; color: #ccc;">← 뒤로가기</a></p>
+    <a href="menu.html" class="back-link">← SELECT ACTOR 화면으로</a>
 
 </body>
 </html>
