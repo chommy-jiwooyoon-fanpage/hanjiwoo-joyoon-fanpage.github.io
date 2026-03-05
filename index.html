@@ -10,30 +10,27 @@
             text-align: center; 
             background: linear-gradient(135deg, #fff5f5 0%, #f0f4ff 100%); 
             margin: 0; padding: 0; 
-            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 쫌좀님의 명령: 사진을 더 작고 세련되게 (액자형 스타일) */
+        /* 쫌좀님의 명령: 사진이 잘리지 않으면서 슬림하게 보이도록 고정 */
         .entrance-banner {
-            width: 90%;      /* 화면 가득 채우지 않고 옆에 여유를 줌 */
-            max-width: 600px; /* 최대 가로 길이를 제한하여 너무 커지지 않게 함 */
-            margin: 30px auto 10px; /* 위아래 여백을 주어 답답함 해소 */
-            border-radius: 15px; /* 모서리를 둥글게 해서 부드러운 느낌 추가 */
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 살짝 그림자를 주어 입체감 부여 */
-        }
-        
-        .entrance-banner img {
             width: 100%;
-            height: auto;     /* 비율 유지 (잘림 방지) */
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+        }
+        .entrance-banner img {
+            max-width: 600px; /* 사진 가로 크기를 제한해서 압박감을 줄임 */
+            width: 100%;
+            height: auto;     /* 사진 비율 그대로! (절대 안 잘림) */
             display: block;
             cursor: pointer;
         }
 
-        .content { padding: 20px; }
-        .actor-name { font-size: 2.5rem; font-weight: 800; color: #222; margin: 10px 0; }
+        .content { padding: 40px 20px; }
+        .actor-name { font-size: 2.5rem; font-weight: 800; color: #222; margin-top: 10px; }
         .heart { color: #ff6b6b; }
-        .sns-container { margin-top: 20px; }
+        .sns-container { margin-top: 30px; }
         .btn { 
             display: inline-block; padding: 12px 24px; margin: 8px; 
             border-radius: 30px; text-decoration: none; font-weight: 600; color: white; 
@@ -45,7 +42,7 @@
 <body>
 
     <div class="entrance-banner">
-        <img src="main.jpg" alt="메인 사진">
+        <img src="main.jpg" alt="메인 배너">
     </div>
 
     <div class="content">
