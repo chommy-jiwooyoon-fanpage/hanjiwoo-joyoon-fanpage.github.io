@@ -1,0 +1,39 @@
+<div id="common-board" style="width: 90%; max-width: 600px; background: white; margin: 50px auto; padding: 20px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: left; font-family: 'Apple SD Gothic Neo', sans-serif;">
+    <div style="font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; color: #333;">💬 익명 한줄평</div>
+    <div style="background: #f8f9fa; padding: 15px; border-radius: 15px; margin-bottom: 20px;">
+        <textarea id="msg" style="width: 100%; border: 1px solid #eee; border-radius: 10px; padding: 10px; resize: none; height: 60px; box-sizing: border-box;" placeholder="비방글은 삭제될 수 있습니다."></textarea>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <input type="password" id="pw" style="border: 1px solid #eee; border-radius: 8px; padding: 8px; flex: 1; font-size: 0.8rem;" placeholder="비번(숫자 4자리)">
+            <button style="background: #7baaff; color: white; border: none; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: 700;" onclick="saveMsg()">등록</button>
+        </div>
+    </div>
+    <div id="msgList">
+        <div style="border-bottom: 1px solid #f0f0f0; padding: 15px 5px; position: relative;">
+            <span style="font-size: 0.7rem; color: #7baaff; font-weight: 800;">익명 • 방금 전</span>
+            <div style="font-size: 0.9rem; color: #444; margin-top: 5px;">페이지 너무 예뻐요! 자주 놀러올게요 🤍</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function saveMsg() {
+        const msg = document.getElementById('msg').value;
+        const pw = document.getElementById('pw').value;
+        if(!msg || !pw) return alert('내용과 비번을 입력해주세요!');
+        const list = document.getElementById('msgList');
+        const row = document.createElement('div');
+        row.style.cssText = "border-bottom: 1px solid #f0f0f0; padding: 15px 5px; position: relative;";
+        row.innerHTML = `<span style="font-size: 0.7rem; color: #7baaff; font-weight: 800;">익명 • 방금 전</span>
+                         <div style="font-size: 0.9rem; color: #444; margin-top: 5px;">${msg}</div>
+                         <button style="position: absolute; right: 5px; top: 15px; background: none; border: none; color: #ddd; cursor: pointer; font-size: 0.7rem;" onclick="delMsg(this, '${pw}')">삭제</button>`;
+        list.prepend(row);
+        document.getElementById('msg').value = ''; document.getElementById('pw').value = '';
+    }
+    function delMsg(btn, realPw) {
+        const input = prompt('비밀번호를 입력하세요:');
+        if(input === realPw || input === '0000') { // 0000은 쫌좀님 전용 관리자 비번
+            btn.parentElement.remove();
+            alert('삭제 완료!');
+        } else { alert('비밀번호가 틀립니다!'); }
+    }
+</script>
