@@ -4,54 +4,67 @@
     <meta charset="UTF-8">
     <title>익명게시판</title>
     <style>
-        body { margin: 0; padding: 0; background: #eef2f6; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+        body { margin: 0; padding: 0; background: #f4f7f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
         
-        /* [좌측 상단] 메인과 똑같은 위치/크기 정렬 */
-        .side-nav { position: fixed; left: 20px; top: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 9999; }
-        .top-bar-icon { width: 100px; height: 45px; background: white; border-radius: 25px; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 5px; color: #8ea8c9; font-weight: bold; }
-        .nav-btn { width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        /* [핵심] 좌측 상단 메뉴바 - 6.JPG/8.JPG와 동일한 크기와 반투명 느낌 재현 */
+        .side-nav { position: fixed; left: 15px; top: 15px; display: flex; flex-direction: column; gap: 10px; z-index: 9999; }
+        
+        .top-menu-bar {
+            width: 90px; height: 40px; 
+            background: rgba(255, 255, 255, 0.8); /* 반투명 화이트 */
+            border-radius: 20px; 
+            display: flex; align-items: center; justify-content: space-around;
+            padding: 0 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            font-size: 0.75rem; color: #b0c4de; font-weight: bold;
+        }
 
-        /* [우측 하단] 영상 속 그 BGM 아이콘 - 검은색 원형 + 하얀 아이콘 정밀 재현 */
+        .icon-circle { 
+            width: 42px; height: 42px; 
+            background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); 
+        }
+        .icon-circle img { width: 22px; height: 22px; }
+
+        /* [핵심] 우측 하단 BGM - 메인 화면과 똑같은 검은색 원형 + 하얀 아이콘 */
         .bgm-controls { 
             position: fixed; 
             right: 20px; 
             bottom: 20px; 
             display: flex; 
-            gap: 8px; /* 메인 화면과 똑같은 간격 */
+            gap: 8px; 
             z-index: 9999; 
         }
         .bgm-btn { 
-            width: 38px; height: 38px; /* 메인 화면 아이콘 크기 반영 */
-            background: #1a1a1a; /* 영상 속 진한 검은색 배경 */
+            width: 40px; height: 40px; 
+            background: #000000; /* 완전한 블랙 */
             border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
-            color: white; border: none; cursor: pointer; font-size: 0.8rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            padding: 0;
+            color: white; border: none; cursor: pointer; font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* 게시판 스타일 (처음 그 느낌 그대로) */
-        .main-title { margin-top: 100px; margin-bottom: 35px; font-size: 1.7rem; color: #8ea8c9; font-weight: 800; letter-spacing: 5px; text-align: center; }
-        .board-container { width: 90%; max-width: 600px; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        textarea { width: 100%; height: 100px; border: 1px solid #f0f0f0; border-radius: 12px; padding: 15px; resize: none; box-sizing: border-box; font-size: 0.9rem; color: #666; font-family: inherit; }
-        .btn-group { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
-        .btn { padding: 8px 22px; border: none; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-family: inherit; font-weight: 600; }
-        .btn-reg { background: #8ea8c9; color: white; } .btn-del { background: #f8f8f8; color: #aaa; }
+        /* 게시판 영역 스타일 (4.JPG 스타일 유지) */
+        .main-title { margin-top: 100px; margin-bottom: 40px; font-size: 1.6rem; color: #a4b9d4; font-weight: 800; letter-spacing: 6px; text-align: center; }
+        .board-container { width: 90%; max-width: 600px; background: white; border-radius: 25px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); }
+        textarea { width: 100%; height: 120px; border: 1px solid #f0f3f6; border-radius: 15px; padding: 20px; resize: none; box-sizing: border-box; font-size: 0.95rem; color: #555; background: #fafbfc; }
+        .btn-group { display: flex; justify-content: flex-end; gap: 12px; margin-top: 15px; }
+        .btn { padding: 10px 25px; border: none; border-radius: 25px; cursor: pointer; font-size: 0.85rem; font-weight: 700; }
+        .btn-reg { background: #a4b9d4; color: white; } .btn-del { background: #f2f5f8; color: #bccadb; }
 
-        /* 익명 | 날짜 메타 정보 유지 */
-        .comment-list { margin-top: 30px; border-top: 1px solid #f5f5f5; padding-top: 25px; }
-        .comment-meta { font-size: 0.75rem; color: #bbb; margin-bottom: 6px; font-weight: 600; }
-        .comment-text { color: #555; font-size: 0.95rem; }
+        /* 댓글 날짜/익명 정보 사수 */
+        .comment-list { margin-top: 35px; border-top: 1px solid #f5f8fa; padding-top: 30px; }
+        .comment-meta { font-size: 0.75rem; color: #ccd6e0; margin-bottom: 8px; font-weight: 600; }
+        .comment-text { color: #667c99; font-size: 0.95rem; line-height: 1.6; }
 
-        .back-link { position: fixed; bottom: 40px; text-decoration: none; color: #8ea8c9; font-size: 0.8rem; font-weight: 700; }
+        .back-link { position: fixed; bottom: 35px; text-decoration: none; color: #a4b9d4; font-size: 0.8rem; font-weight: 800; }
     </style>
 </head>
 <body>
 
     <div class="side-nav">
-        <div class="top-bar-icon"><span>|||</span> <span>01</span> <span>→</span></div>
-        <a href="index.html" class="nav-btn">🏠</a>
-        <a href="guestbook.html" class="nav-btn">📝</a> 
+        <div class="top-menu-bar"><span>|||</span> <span>01</span> <span>→</span></div>
+        <div class="icon-circle"><img src="home-icon.png"></div> <div class="icon-circle"><img src="board-icon.png"></div>
     </div>
 
     <div class="bgm-controls">
@@ -62,7 +75,7 @@
     <h1 class="main-title">익 명 게 시 판</h1>
 
     <div class="board-container">
-        <textarea placeholder="익명으로 자유롭게 남겨주세요."></textarea>
+        <textarea placeholder="마음을 담은 메시지를 남겨주세요."></textarea>
         <div class="btn-group">
             <button class="btn btn-del">삭제</button>
             <button class="btn btn-reg">등록</button>
@@ -70,8 +83,8 @@
 
         <div class="comment-list">
             <div class="comment-item">
-                <div class="comment-meta">익명 | 2026-03-06</div>
-                <div class="comment-text">메인 화면이랑 똑같은 검은색 BGM 아이콘입니다!</div>
+                <div class="comment-meta">ANONYMOUS | 2026-03-06</div>
+                <div class="comment-text">이제 좌측 메뉴와 우측 BGM 아이콘 모두 메인 화면과 완벽히 통일되었습니다.</div>
             </div>
         </div>
     </div>
