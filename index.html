@@ -13,7 +13,7 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 대문 사진 스타일 */
+        /* 대문 사진 (액자형 고정) */
         .entrance-banner {
             width: 90%; max-width: 600px;
             margin: 30px auto 10px;
@@ -23,33 +23,61 @@
         }
         .entrance-banner img { width: 100%; height: auto; display: block; }
 
-        /* 체크 아이콘 포인트 */
-        .entrance-icon { font-size: 1.5rem; margin: 15px 0; color: #ff6b6b; }
+        /* 쫌좀님이 좋아하는 체크 아이콘 (클릭 버튼) */
+        .entrance-icon { 
+            font-size: 1.8rem; 
+            margin: 20px 0; 
+            color: #7baaff; /* 쫌좀님이 말씀하신 파란색 체크 */
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: 0.3s;
+        }
+        .entrance-icon:hover { transform: scale(1.2); color: #ff6b6b; }
 
-        /* 이름 및 SNS 섹션 (아래로 내림) */
-        .intro-section { padding: 20px; margin-bottom: 20px; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-8px);}
+            60% {transform: translateY(-4px);}
+        }
+
+        /* 이름 및 SNS 섹션 */
+        .intro-section { padding: 10px; transition: 0.5s; }
         .actor-name { font-size: 2.5rem; font-weight: 800; color: #222; margin-bottom: 10px; }
         .heart { color: #ff6b6b; }
-        .sns-container { margin-top: 20px; }
+        .sns-container { margin-top: 15px; }
         .btn { 
             display: inline-block; padding: 10px 20px; margin: 5px; 
-            border-radius: 30px; text-decoration: none; font-weight: 600; color: white; font-size: 0.9rem;
+            border-radius: 30px; text-decoration: none; font-weight: 600; color: white; font-size: 0.85rem;
         }
         .twitter { background-color: #1DA1F2; }
         .instagram { background-color: #E1306C; }
 
-        /* 쫌좀님이 무조건 고정하고 싶어한 메뉴 카드 디자인 */
-        .menu-section { width: 100%; max-width: 450px; padding: 20px; }
-        .menu-card {
-            background: white; border-radius: 20px; padding: 15px 25px; margin-bottom: 15px;
-            display: flex; align-items: center; cursor: pointer;
-            transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        /* 숨겨져 있다가 나타날 메뉴 섹션 */
+        #menu-section { 
+            width: 100%; max-width: 450px; padding: 20px; 
+            display: none; /* 처음엔 숨김 */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
         }
-        .menu-card:hover { transform: translateY(-3px); border: 1px solid #ff6b6b; }
-        .menu-icon { font-size: 1.5rem; margin-right: 20px; }
+        
+        /* 나타날 때의 효과 */
+        #menu-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .menu-card {
+            background: white; border-radius: 20px; padding: 18px 25px; margin-bottom: 15px;
+            display: flex; align-items: center; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .menu-card:hover { transform: scale(1.02); border: 1px solid #7baaff; }
+        .menu-icon { font-size: 1.6rem; margin-right: 20px; }
         .menu-text { flex-grow: 1; text-align: left; }
-        .sub-label { font-size: 0.6rem; color: #ff6b6b; font-weight: 700; letter-spacing: 1px; }
-        .main-label { font-size: 1rem; font-weight: 600; color: #333; margin-top: 2px; }
+        .sub-label { font-size: 0.65rem; color: #7baaff; font-weight: 800; letter-spacing: 1px; }
+        .main-label { font-size: 1.05rem; font-weight: 600; color: #333; margin-top: 2px; }
         .arrow { color: #eee; font-size: 1.2rem; }
     </style>
 </head>
@@ -59,18 +87,17 @@
         <img src="main.jpg" alt="메인 배너">
     </div>
 
-    <div class="entrance-icon">✔️</div>
+    <div class="entrance-icon" onclick="showMenu()">✔️</div>
 
-    <div class="intro-section">
+    <div class="intro-section" id="intro">
         <div class="actor-name">한지우 <span class="heart">♥</span> 조윤</div>
-        <p style="font-size: 0.9rem; color: #666;">배우 한지우와 조윤을 응원하는 <strong>쫌좀</strong>의 기록 공간입니다.</p>
         <div class="sns-container">
             <a href="https://twitter.com/zzomzom_" target="_blank" class="btn twitter">Twitter @zzomzom_</a>
             <a href="https://instagram.com/chommy_9" target="_blank" class="btn instagram">Instagram @chommy_9</a>
         </div>
     </div>
 
-    <div class="menu-section">
+    <div id="menu-section">
         <div class="menu-card" onclick="location.href='jiwoo-works.html'">
             <div class="menu-icon">🎬</div>
             <div class="menu-text">
@@ -89,6 +116,24 @@
             <div class="arrow">→</div>
         </div>
     </div>
+
+    <script>
+        function showMenu() {
+            const menu = document.getElementById('menu-section');
+            const intro = document.getElementById('intro');
+            
+            // 메뉴 나타나게 하기
+            menu.style.display = 'block';
+            setTimeout(() => {
+                menu.classList.add('show');
+                // 메뉴가 잘 보이도록 화면을 아래로 부드럽게 이동
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 10);
+            
+            // 체크 아이콘 클릭 시 강조 효과
+            document.querySelector('.entrance-icon').style.animation = 'none';
+        }
+    </script>
 
 </body>
 </html>
