@@ -69,6 +69,13 @@
     </div>
 
     <a href="menu.html" class="back-link">← SELECT ACTOR 화면으로</a>
-
+<div id="board-placeholder"></div>
+<script>
+    fetch('board.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('board-placeholder').innerHTML = data;
+        });
+</script>
 </body>
 </html>
