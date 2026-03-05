@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한지우 FILMOGRAPHY</title>
+    <style>
+        body { 
+            font-family: 'Apple SD Gothic Neo', sans-serif; 
+            text-align: center; background: #fff; 
+            margin: 0; padding: 40px 20px; 
+        }
+        .header-title { font-size: 1.8rem; font-weight: 800; color: #333; margin-bottom: 30px; }
+        
+        /* 쫌좀님이 원하신 아이콘 타일 레이아웃 */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 한 줄에 2개씩 배치 */
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .work-item {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .work-icon {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* 정사각형 아이콘 모양 */
+            background: #f0f0f0;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
+        }
+
+        .work-item:hover .work-icon {
+            transform: scale(1.05);
+            background: #7baaff;
+            color: white;
+        }
+
+        .work-title { font-size: 0.9rem; font-weight: 600; color: #555; }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">HAN JI WOO</div>
+
+    <div class="work-grid">
+        <div class="work-item" onclick="location.href='jiwoo-post-1.html'">
+            <div class="work-icon">🎞️</div>
+            <div class="work-title">작품 01</div>
+        </div>
+
+        <div class="work-item" onclick="location.href='jiwoo-post-2.html'">
+            <div class="work-icon">🎬</div>
+            <div class="work-title">작품 02</div>
+        </div>
+
+        </div>
+
+    <p style="margin-top: 50px;"><a href="menu.html" style="text-decoration: none; color: #ccc;">← 뒤로가기</a></p>
+
+</body>
+</html>
