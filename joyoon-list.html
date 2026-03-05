@@ -14,15 +14,15 @@
         .work-title { font-size: 0.95rem; font-weight: 700; color: #333; }
         .back-link { margin-top: 60px; display: block; text-decoration: none; color: #bbb; font-size: 0.8rem; }
         
-        /* 고정 아이콘 공통 스타일 */
-        .fixed-btn { position: fixed; left: 20px; width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; }
+        /* 왼쪽 상단 고정 아이콘 스타일 */
+        .fixed-btn { position: fixed; left: 20px; width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 9999; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <div class="fixed-btn" onclick="location.href='index.html'" style="top: 20px;">🏠</div>
+    <a href="index.html" class="fixed-btn" style="top: 20px;">🏠</a>
 
-    <div class="fixed-btn" onclick="location.href='guestbook.html'" style="top: 75px;">💬</div>
+    <a href="guestbook.html" class="fixed-btn" style="top: 75px;">💬</a>
 
     <div class="header-title">CHO YOON</div>
 
@@ -39,5 +39,5 @@
 
     <a href="menu.html" class="back-link">← SELECT ACTOR 화면으로</a>
 
-</body>
+    </body>
 </html>
