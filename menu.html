@@ -1,21 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>SELECT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SELECT ACTOR</title>
     <style>
-        body { background: #eef2f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif; }
-        .btn { 
-            text-decoration: none; width: 200px; height: 100px; background: white; 
-            margin: 20px; border-radius: 30px; display: flex; justify-content: center; 
-            align-items: center; font-weight: bold; color: #444;
-            box-shadow: 10px 10px 20px #d1d9e6, -10px -15px 20px #ffffff;
+        /* 기본 배경 설정 */
+        body { 
+            margin: 0; padding: 0; background: #eef2f6; 
+            height: 100vh; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; 
+            font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden;
         }
-        .btn:hover { background: #8ea8c9; color: white; }
+
+        /* 🎵 BGM 플레이어 (좌측 상단 고정) */
+        .bgm-player { 
+            position: fixed; top: 30px; left: 30px; z-index: 10001; 
+            display: flex; align-items: center; gap: 15px; padding: 10px 20px; 
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(15px); 
+            border-radius: 100px; border: 1px solid rgba(255, 255, 255, 0.6); 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); 
+        }
+        .visualizer { display: flex; align-items: center; gap: 3px; height: 12px; cursor: pointer; }
+        .bar { width: 2px; height: 100%; background: #8ea8c9; border-radius: 2px; transition: 0.3s; }
+        .playing .bar { animation: wave 1s ease-in-out infinite; }
+        @keyframes wave { 0%, 100% { height: 4px; } 50% { height: 12px; } }
+        .control-group { display: flex; align-items: center; gap: 12px; border-left: 1px solid rgba(142, 168, 201, 0.2); padding-left: 12px; }
+        .track-num { font-size: 10px; color: #8ea8c9; font-weight: 800; letter-spacing: 1px; }
+        .btn-icon { cursor: pointer; color: #8ea8c9; font-size: 14px; opacity: 0.8; }
+
+        /* 배우 카드 컨테이너 */
+        .actor-container { display: flex; gap: 50px; margin-bottom: 50px; }
+        .actor-card { 
+            text-decoration: none; width: 240px; height: 140px; 
+            background: #eef2f6; border-radius: 40px; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 18px 18px 30px #d1d9e6, -18px -18px 30px #ffffff; 
+            transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .actor-name { font-size: 1.2rem; font-weight: 800; color: #555; letter-spacing: 2px; transition: 0.4s; }
+        .actor-card:hover { transform: translateY(-15px); background: #8ea8c9; box-shadow: 0 20px 40px rgba(142, 168, 201, 0.3); }
+        .actor-card:hover .actor-name { color: white; letter-spacing: 5px; }
+
+        /* 🔙 뒤로가기 버튼 (하단 중앙 고정) */
+        .back-link { 
+            position: fixed; bottom: 50px; 
+            text-decoration: none; color: #8ea8c9; 
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; 
+            opacity: 0.8; transition: 0.3s; 
+        }
+        .back-link:hover { opacity: 1; letter-spacing: 4px; }
     </style>
 </head>
 <body>
-    <a href="jiwoo-list.html" class="btn">HAN JI WOO</a>
-    <a href="joyoon-list.html" class="btn">CHO YOON</a>
+
+    <div class="bgm-player">
+        <div class="visualizer" id="visualizer" onclick="toggleMusic()">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+        <div class="control-group">
+            <div class="track-num" id="track-info">01</div>
+            <div class="btn-icon" onclick="nextMusic()">→</div>
+        </div>
+        <audio id="main-bgm" loop><source id="audio-source" src="bgm1.mp3" type="audio/mpeg"></audio>
+    </div>
+
+    <div class="actor-container">
+        <a href="jiwoo-list.html" class="actor-card"><span class="actor-name">HAN JI WOO</span></a>
+        <a href="joyoon-list.html" class="actor-card"><span class="actor-name">CHO YOON</span></a>
+    </div>
+
+    <a href="index.html" class="back-link">← SELECT ACTOR</a>
+
+    <script>
+        const playlist = ["bgm1.mp3", "bgm2.mp3", "bgm3.mp3"];
+        let currentTrack = 0;
+        const music = document.getElementById('main-bgm');
+        const source = document.getElementById('audio-source');
+        const trackInfo = document.getElementById('track-info');
+        const visualizer = document.getElementById('visualizer');
+
+        function toggleMusic() {
+            if (music.paused) { music.play(); visualizer.classList.add('playing'); } 
+            else { music.pause(); visualizer.classList.remove('playing'); }
+        }
+        function nextMusic() {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            source.src = playlist[currentTrack];
+            music.load(); music.play();
+            trackInfo.innerText = (currentTrack + 1).toString().padStart(2, '0');
+            visualizer.classList.add('playing');
+        }
+    </script>
 </body>
 </html>
