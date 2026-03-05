@@ -5,12 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAN JI WOO x CHO YOON</title>
     <style>
-        body { font-family: 'Apple SD Gothic Neo', sans-serif; background: #eef2f6; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #333; }
+        /* 배경: 쫌좀님이 고르신 새벽 안개 블루 */
+        body { 
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; 
+            background: #eef2f6; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            color: #333; 
+            overflow: hidden;
+        }
+        
+        /* BGM 컨트롤러: 왼쪽 상단 고정 */
+        .bgm-container {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10001;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 8px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .bgm-container:hover { background: rgba(255, 255, 255, 0.7); }
+        .music-icon { font-size: 12px; color: #8ea8c9; }
+        .bgm-text { font-size: 11px; letter-spacing: 1px; color: #8ea8c9; font-weight: 700; }
+
         .main-container { width: 90%; max-width: 650px; text-align: center; }
-        .banner-img { width: 100%; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); display: block; margin-bottom: 40px; border: 8px solid white; box-sizing: border-box; }
-        .enter-btn { display: inline-block; padding: 12px 45px; font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; color: #8ea8c9; border: 2px solid #8ea8c9; border-radius: 50px; text-decoration: none; transition: 0.3s; cursor: pointer; background: white; }
-        .enter-btn:hover { background: #8ea8c9; color: #fff; transform: translateY(-3px); }
+        .banner-img { 
+            width: 100%; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06); 
+            display: block; 
+            margin-bottom: 40px; 
+            border: 8px solid white; 
+            box-sizing: border-box; 
+        }
+
+        .enter-btn { 
+            display: inline-block; 
+            padding: 12px 45px; 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+            color: #8ea8c9; 
+            border: 2px solid #8ea8c9; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            background: white; 
+        }
+        .enter-btn:hover { 
+            background: #8ea8c9; 
+            color: #fff; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(142, 168, 201, 0.2);
+        }
+
         .site-title { font-size: 1.1rem; font-weight: 300; letter-spacing: 6px; margin-top: 10px; color: #adbcd1; text-transform: uppercase; }
+
         .sns-fixed-container { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 15px; z-index: 10000; }
         .sns-link { text-decoration: none; color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; border-radius: 50%; }
         .x-icon { background: #000; }
@@ -18,14 +81,54 @@
     </style>
 </head>
 <body>
-    <div class="main-container">
-        <img src="main.jpg" class="banner-img">
-        <div class="site-title">Eternal Sunshine</div>
-        <div style="margin-top: 40px;"><a onclick="location.href='menu.html'" class="enter-btn">ENTER</a></div>
+
+    <div class="bgm-container" onclick="toggleMusic()">
+        <span class="music-icon" id="music-status">♪</span>
+        <span class="bgm-text" id="bgm-label">BGM OFF</span>
+        <audio id="main-bgm" loop>
+            <source src="bgm.mp3" type="audio/mpeg">
+        </audio>
     </div>
+
+    <div class="main-container">
+        <img src="main.jpg" class="banner-img" alt="Main Banner">
+        <div class="site-title">Eternal Sunshine</div>
+        <div style="margin-top: 40px;">
+            <a onclick="location.href='menu.html'" class="enter-btn">ENTER</a>
+        </div>
+    </div>
+
     <div class="sns-fixed-container">
         <a href="https://twitter.com/zzomzom_" target="_blank" class="sns-link x-icon">X</a>
         <a href="https://instagram.com/chommy_9" target="_blank" class="sns-link ig-icon">IG</a>
     </div>
+
+    <script>
+        function toggleMusic() {
+            const music = document.getElementById('main-bgm');
+            const label = document.getElementById('bgm-label');
+            const status = document.getElementById('music-status');
+            
+            if (music.paused) {
+                music.play();
+                label.innerText = "BGM ON";
+                status.style.animation = "pulse 1.5s infinite";
+            } else {
+                music.pause();
+                label.innerText = "BGM OFF";
+                status.style.animation = "none";
+            }
+        }
+    </script>
+
+    <style>
+        /* 음악 재생 시 아이콘이 은은하게 움직이는 효과 */
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
 </body>
 </html>
