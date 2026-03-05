@@ -2,70 +2,24 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SELECT ACTOR</title>
     <style>
-        /* 모든 기본 설정을 무시하고 쫌좀님 스타일로 강제 고정 */
-        body { 
-            margin: 0 !important; 
-            padding: 0 !important; 
-            background: #eef2f6 !important; 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-family: 'Apple SD Gothic Neo', sans-serif;
-        }
-
-        .actor-container { 
-            display: flex; 
-            gap: 40px; 
-        }
-
-        /* [핵심] 쫌좀님이 보셨던 그 영롱한 입체 카드 */
+        body { margin: 0; background: #eef2f6; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
+        .actor-container { display: flex; gap: 40px; }
         .actor-card { 
-            text-decoration: none !important;
-            width: 220px; 
-            height: 120px; 
-            background: #eef2f6 !important; /* 배경색과 맞춰야 입체감이 살아요 */
-            border-radius: 35px !important;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            /* 뉴모피즘의 핵심: 밝은 그림자와 어두운 그림자의 조화 */
-            box-shadow: 15px 15px 30px #d1d9e6, -15px -15px 30px #ffffff !important;
-            transition: 0.4s ease-in-out;
-            border: none !important;
+            text-decoration: none; width: 220px; height: 120px; background: #eef2f6; 
+            border-radius: 35px; display: flex; align-items: center; justify-content: center; 
+            box-shadow: 15px 15px 30px #d1d9e6, -15px -15px 30px #ffffff; transition: 0.4s; 
         }
-
-        .actor-name { 
-            font-size: 1.1rem !important; 
-            font-weight: 900 !important; 
-            color: #444 !important; 
-            letter-spacing: 2px; 
-            text-transform: uppercase;
-        }
-
-        /* 마우스 올렸을 때: 색깔이 반전되면서 쓱 올라옴 */
-        .actor-card:hover { 
-            transform: translateY(-15px); 
-            background: #8ea8c9 !important; 
-            box-shadow: 0 20px 40px rgba(142, 168, 201, 0.4) !important;
-        }
-
-        .actor-card:hover .actor-name { 
-            color: white !important; 
-        }
+        .actor-name { font-size: 1.1rem; font-weight: 900; color: #444; }
+        .actor-card:hover { transform: translateY(-10px); background: #8ea8c9; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .actor-card:hover .actor-name { color: white; }
     </style>
 </head>
 <body>
     <div class="actor-container">
-        <a href="jiwoo-list.html" class="actor-card">
-            <span class="actor-name">Han Ji Woo</span>
-        </a>
-        <a href="joyoon-list.html" class="actor-card">
-            <span class="actor-name">Cho Yoon</span>
-        </a>
+        <a href="jiwoo-list.html" class="actor-card"><span class="actor-name">HAN JI WOO</span></a>
+        <a href="joyoon-list.html" class="actor-card"><span class="actor-name">CHO YOON</span></a>
     </div>
 </body>
 </html>
