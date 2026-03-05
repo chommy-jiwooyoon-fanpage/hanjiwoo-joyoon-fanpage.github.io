@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한지우 x 조윤 팬페이지</title>
+    <title>HAN JI WOO x CHO YOON</title>
     <style>
-        body { font-family: 'Apple SD Gothic Neo', sans-serif; text-align: center; background: #f0f4ff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .entrance-banner { width: 90%; max-width: 600px; margin: 30px auto 10px; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .entrance-banner img { width: 100%; height: auto; display: block; }
-        .entrance-icon { font-size: 1.8rem; margin: 20px 0; color: #7baaff; cursor: pointer; }
+        /* 홈마 스타일: 배경은 아주 연한 그레이나 화이트로 깔끔하게 */
+        body { font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #fafafa; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #333; }
+        
+        /* 메인 배너: 사진을 강조하고 모서리를 둥글게 */
+        .main-container { width: 90%; max-width: 650px; text-align: center; }
+        .banner-img { width: 100%; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: block; margin-bottom: 40px; }
 
-        /* SNS 버튼 - 오른쪽 하단 고정 */
-        .sns-fixed-container { position: fixed; bottom: 25px; right: 25px; display: flex; gap: 12px; z-index: 10000; }
-        .sns-link { text-decoration: none; color: white; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s; }
-        .sns-link:hover { transform: scale(1.1); }
-        .x-icon { background: #000; border-radius: 50%; }
-        .ig-icon { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-radius: 10px; }
+        /* 입장 버튼: 체크 대신 세련된 영문 텍스트 버튼 */
+        .enter-btn { display: inline-block; padding: 12px 40px; font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; color: #7baaff; border: 1.5px solid #7baaff; border-radius: 50px; text-decoration: none; transition: 0.3s; cursor: pointer; background: transparent; }
+        .enter-btn:hover { background: #7baaff; color: #fff; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(123, 170, 255, 0.3); }
+
+        /* 하단 타이틀 */
+        .site-title { font-size: 1.2rem; font-weight: 200; letter-spacing: 5px; margin-top: 20px; color: #bbb; text-transform: uppercase; }
+
+        /* SNS 버튼: 오른쪽 하단 고정 */
+        .sns-fixed-container { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 15px; z-index: 10000; }
+        .sns-link { text-decoration: none; color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; border-radius: 50%; }
+        .x-icon { background: #000; }
+        .ig-icon { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .sns-link:hover { transform: rotate(10deg) scale(1.1); }
     </style>
 </head>
 <body>
 
-    <div class="entrance-banner"><img src="main.jpg" alt="메인 배너"></div>
-    
-    <div class="entrance-icon" onclick="location.href='menu.html'">✔️</div>
+    <div class="main-container">
+        <img src="main.jpg" class="banner-img" alt="Main Banner">
+        
+        <div class="site-title">Eternal Sunshine</div>
+
+        <div style="margin-top: 40px;">
+            <a onclick="location.href='menu.html'" class="enter-btn">ENTER</a>
+        </div>
+    </div>
 
     <div class="sns-fixed-container">
         <a href="https://twitter.com/zzomzom_" target="_blank" class="sns-link x-icon">X</a>
