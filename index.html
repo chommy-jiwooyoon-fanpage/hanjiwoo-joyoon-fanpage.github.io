@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한지우 x 조윤 팬페이지</title>
     <style>
-        /* 11.JPG의 부드러운 배경색과 정렬 복구 */
         body { 
             font-family: 'Apple SD Gothic Neo', sans-serif; 
             text-align: center; 
@@ -13,32 +12,27 @@
             margin: 0; padding: 0; 
         }
 
-        /* 대문 이미지 슬림하게 고정 (너무 크지 않게!) */
+        /* 쫌좀님의 명령: 대문 사진을 아주 슬림하게 고정 */
         .entrance-banner {
             width: 100%;
-            max-height: 300px; /* 사진 높이를 딱 300px로 고정해서 크기 조절 */
-          .entrance-banner {
-            width: 100%;
-            height: 180px;
-            max-height: 180px;
+            height: 150px; /* 180보다 더 슬림하게 150으로 확 줄였습니다 */
             overflow: hidden;
             background-color: #000;
         }
-
         .entrance-banner img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: cover; /* 잘림 없이 슬림한 틀에 꽉 채움 */
+            object-position: center 20%; 
             cursor: pointer;
         }
-}
-        /* 11.JPG 스타일의 폰트와 버튼 유지 */
-        .content { padding: 50px 20px; }
-        .actor-name { font-size: 3rem; font-weight: 800; color: #222; margin-top: 20px; }
+
+        .content { padding: 40px 20px; }
+        .actor-name { font-size: 2.5rem; font-weight: 800; color: #222; margin-top: 10px; }
         .heart { color: #ff6b6b; }
-        .sns-container { margin-top: 40px; }
+        .sns-container { margin-top: 30px; }
         .btn { 
-            display: inline-block; padding: 14px 28px; margin: 10px; 
+            display: inline-block; padding: 12px 24px; margin: 8px; 
             border-radius: 30px; text-decoration: none; font-weight: 600; color: white; 
         }
         .twitter { background-color: #1DA1F2; }
@@ -47,7 +41,7 @@
 </head>
 <body>
 
-    <div class="entrance-banner" onclick="window.scrollTo({top: 500, behavior: 'smooth'})">
+    <div class="entrance-banner">
         <img src="main.jpg" alt="메인 배너">
     </div>
 
