@@ -4,42 +4,94 @@
     <meta charset="UTF-8">
     <title>익명 게시판</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        /* 13번 사진의 그 부드럽고 고급스러운 감성 그대로 */
-        body { margin: 0; padding: 0; background: #f0f4f8; font-family: 'Apple SD Gothic Neo', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        /* 좌측 상단 메뉴바 (위치 고정) */
+        // 쫌좀님이 보내주신 소중한 설정값 적용
+        const firebaseConfig = {
+            apiKey: "AIzaSyCD0OaaN1E5uT950X5hkzCBdqT87JQRXrg",
+            authDomain: "jiwoo-fanpage.firebaseapp.com",
+            projectId: "jiwoo-fanpage",
+            storageBucket: "jiwoo-fanpage.firebasestorage.app",
+            messagingSenderId: "928634858988",
+            appId: "1:928634858988:web:34ae1adf6bab3ad654e4c9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const postsCol = collection(db, "posts");
+
+        // [기능 1] 등록 버튼 클릭 시 데이터 저장
+        window.savePost = async () => {
+            const content = document.getElementById('postInput').value;
+            if (!content.trim()) return alert("내용을 입력해주세요!");
+
+            try {
+                await addDoc(postsCol, {
+                    content: content,
+                    timestamp: serverTimestamp(),
+                    author: "ANONYMOUS"
+                });
+                document.getElementById('postInput').value = ""; // 입력창 비우기
+            } catch (e) { console.error("Error adding document: ", e); }
+        };
+
+        // [기능 2] 실시간으로 목록 불러오기 (UI 자동 업데이트)
+        const q = query(postsCol, orderBy("timestamp", "desc"));
+        onSnapshot(q, (snapshot) => {
+            const msgList = document.getElementById('msgList');
+            msgList.innerHTML = "";
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                const date = data.timestamp ? data.timestamp.toDate().toLocaleDateString() : "2026-03-06";
+                
+                const msgItem = document.createElement('div');
+                msgItem.className = 'msg-item';
+                msgItem.innerHTML = `
+                    <div class="msg-meta">
+                        ${data.author} | ${date}
+                        <span class="del-trigger" onclick="deletePost('${docSnap.id}')">삭제</span>
+                    </div>
+                    <div class="msg-content">${data.content}</div>
+                `;
+                msgList.appendChild(msgItem);
+            });
+        });
+
+        // [기능 3] 관리자 삭제 기능 (클릭 시 확인 창)
+        window.deletePost = async (id) => {
+            if (confirm("이 메시지를 삭제하시겠습니까?")) {
+                await deleteDoc(doc(db, "posts", id));
+            }
+        };
+    </script>
+
+    <style>
+        body { margin: 0; padding: 0; background: #f0f4f8; font-family: 'Apple SD Gothic Neo', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .side-nav { position: fixed; left: 18px; top: 22px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
         .top-menu-bar { width: 95px; height: 38px; background: white; border-radius: 20px; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); font-size: 0.75rem; color: #a5b8d0; font-weight: bold; }
-        
-        /* [수정] 대형 팬페이지 감성의 얇은 라인 아이콘 버튼 */
-        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; color: #a5b8d0; transition: 0.3s; }
-        .icon-circle:hover { color: #8fa3bc; background: #fafafa; }
-        
-        /* 아이콘 굵기 및 크기 조절 */
+        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; color: #a5b8d0; }
         .lucide { width: 20px; height: 20px; stroke-width: 1.5px; }
 
-        /* 게시판 본체 디자인 */
-        .container { width: 90%; max-width: 700px; margin-top: 150px; text-align: center; }
+        .container { width: 90%; max-width: 700px; margin-top: 150px; text-align: center; margin-bottom: 100px; }
         .title { font-size: 1.5rem; color: #a5b8d0; font-weight: 800; letter-spacing: 12px; margin-bottom: 60px; text-transform: uppercase; }
-
-        /* 13번 사진의 화이트 일체형 박스 */
         .board-box { background: white; border-radius: 40px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.05); text-align: left; }
         
-        /* 입력창 및 삭제/등록 버튼 (13번 스타일) */
         .input-area { border-bottom: 1px solid #f0f4f8; padding-bottom: 30px; margin-bottom: 30px; }
         textarea { width: 100%; height: 120px; border: none; outline: none; resize: none; font-size: 1rem; color: #778ca3; background: transparent; font-family: inherit; }
+        
         .btn-group { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; }
         .action-btn { border: none; padding: 10px 25px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
-        .delete-btn { background: #f0f4f8; color: #a5b8d0; }
+        .delete-btn { background: #f0f4f8; color: #a5b8d0; } 
         .submit-btn { background: #a5b8d0; color: white; }
 
-        /* 익명/날짜 메시지 레이아웃 */
-        .msg-item { padding: 10px 0; }
-        .msg-meta { font-size: 0.75rem; color: #ccd6e0; margin-bottom: 8px; font-weight: bold; }
-        .msg-content { font-size: 0.95rem; color: #778ca3; line-height: 1.8; }
+        .msg-item { padding: 20px 0; border-bottom: 1px solid #f9fbff; }
+        .msg-meta { font-size: 0.75rem; color: #ccd6e0; margin-bottom: 8px; font-weight: bold; display: flex; justify-content: space-between; }
+        .msg-content { font-size: 0.95rem; color: #778ca3; line-height: 1.8; word-break: break-all; }
+        .del-trigger { cursor: pointer; color: #f0f4f8; transition: 0.3s; }
+        .del-trigger:hover { color: #ccd6e0; }
 
-        /* 하단 BGM 버튼 */
         .bgm-controls { position: fixed; right: 25px; bottom: 30px; display: flex; gap: 10px; z-index: 10000; }
         .bgm-btn { width: 45px; height: 45px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .back-link { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); text-decoration: none; color: #b0c4de; font-size: 0.8rem; font-weight: 800; letter-spacing: 4px; }
@@ -55,34 +107,22 @@
 
     <div class="container">
         <div class="title">익 명 게 시 판</div>
-        
         <div class="board-box">
             <div class="input-area">
-                <textarea placeholder="마음을 담은 메시지를 남겨주세요."></textarea>
+                <textarea id="postInput" placeholder="마음을 담은 메시지를 남겨주세요."></textarea>
                 <div class="btn-group">
-                    <button class="action-btn delete-btn">삭제</button>
-                    <button class="action-btn submit-btn">등록</button>
+                    <button class="action-btn delete-btn" onclick="document.getElementById('postInput').value=''">삭제</button>
+                    <button class="action-btn submit-btn" onclick="savePost()">등록</button>
                 </div>
             </div>
-
-            <div class="msg-list">
-                <div class="msg-item">
-                    <div class="msg-meta">ANONYMOUS | 2026-03-06</div>
-                    <div class="msg-content">메인 화면 아이콘과 위치, BGM 버튼까지 완벽하게 통일되었습니다.</div>
+            <div id="msgList" class="msg-list">
                 </div>
-            </div>
         </div>
     </div>
 
-    <div class="bgm-controls">
-        <button class="bgm-btn">🎵</button>
-        <button class="bgm-btn">✖</button>
-    </div>
-
+    <div class="bgm-controls"><button class="bgm-btn">🎵</button><button class="bgm-btn">✖</button></div>
     <a href="menu.html" class="back-link">← BACK TO MENU</a>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
