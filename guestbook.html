@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>익명 게시판</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* 13번 사진의 부드러운 톤 그대로 */
+        /* 13번 사진의 그 부드럽고 고급스러운 감성 그대로 */
         body { margin: 0; padding: 0; background: #f0f4f8; font-family: 'Apple SD Gothic Neo', sans-serif; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
 
-        /* [원상 복구] 좌측 메뉴 스타일 */
+        /* 좌측 상단 메뉴바 (위치 고정) */
         .side-nav { position: fixed; left: 18px; top: 22px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
         .top-menu-bar { width: 95px; height: 38px; background: white; border-radius: 20px; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); font-size: 0.75rem; color: #a5b8d0; font-weight: bold; }
         
-        /* 아이콘 원형 버튼 */
-        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; }
-        .icon-circle img { width: 22px; height: 22px; object-fit: contain; }
+        /* [수정] 대형 팬페이지 감성의 얇은 라인 아이콘 버튼 */
+        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; color: #a5b8d0; transition: 0.3s; }
+        .icon-circle:hover { color: #8fa3bc; background: #fafafa; }
+        
+        /* 아이콘 굵기 및 크기 조절 */
+        .lucide { width: 20px; height: 20px; stroke-width: 1.5px; }
 
-        /* 게시판 컨테이너 */
+        /* 게시판 본체 디자인 */
         .container { width: 90%; max-width: 700px; margin-top: 150px; text-align: center; }
         .title { font-size: 1.5rem; color: #a5b8d0; font-weight: 800; letter-spacing: 12px; margin-bottom: 60px; text-transform: uppercase; }
 
-        /* 13번의 일체형 박스 디자인 */
+        /* 13번 사진의 화이트 일체형 박스 */
         .board-box { background: white; border-radius: 40px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.05); text-align: left; }
+        
+        /* 입력창 및 삭제/등록 버튼 (13번 스타일) */
         .input-area { border-bottom: 1px solid #f0f4f8; padding-bottom: 30px; margin-bottom: 30px; }
         textarea { width: 100%; height: 120px; border: none; outline: none; resize: none; font-size: 1rem; color: #778ca3; background: transparent; font-family: inherit; }
-        
         .btn-group { display: flex; justify-content: flex-end; gap: 15px; margin-top: 20px; }
-        .action-btn { border: none; padding: 10px 25px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .action-btn { border: none; padding: 10px 25px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
         .delete-btn { background: #f0f4f8; color: #a5b8d0; }
         .submit-btn { background: #a5b8d0; color: white; }
 
+        /* 익명/날짜 메시지 레이아웃 */
         .msg-item { padding: 10px 0; }
         .msg-meta { font-size: 0.75rem; color: #ccd6e0; margin-bottom: 8px; font-weight: bold; }
         .msg-content { font-size: 0.95rem; color: #778ca3; line-height: 1.8; }
 
+        /* 하단 BGM 버튼 */
         .bgm-controls { position: fixed; right: 25px; bottom: 30px; display: flex; gap: 10px; z-index: 10000; }
         .bgm-btn { width: 45px; height: 45px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .back-link { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); text-decoration: none; color: #b0c4de; font-size: 0.8rem; font-weight: 800; letter-spacing: 4px; }
@@ -42,8 +49,8 @@
 
     <div class="side-nav">
         <div class="top-menu-bar"><span>|||</span> <span>01</span> <span>→</span></div>
-        <a href="index.html" class="icon-circle"><img src="./home.png"></a> 
-        <a href="jiwoo-list.html" class="icon-circle"><img src="./board.png"></a> 
+        <a href="index.html" class="icon-circle"><i data-lucide="home"></i></a> 
+        <a href="jiwoo-list.html" class="icon-circle"><i data-lucide="layout-list"></i></a> 
     </div>
 
     <div class="container">
@@ -74,5 +81,8 @@
 
     <a href="menu.html" class="back-link">← BACK TO MENU</a>
 
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
