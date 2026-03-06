@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ETERNAL SUNSHINE</title>
+    <style>
+        body { margin: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #ebf1f6; font-family: 'Apple SD Gothic Neo', sans-serif; }
+        .img-container { width: 85vw; max-width: 480px; aspect-ratio: 16 / 9; background: url('main.jpg') no-repeat center/cover; border: 6px solid white; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); margin-bottom: 5vh; position: relative; }
+        .bgm-btn { position: absolute; bottom: 15px; right: 15px; background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .sub-title { font-size: 0.8rem; color: #a5b8d0; letter-spacing: 0.4em; margin-bottom: 6vh; text-transform: uppercase; }
+        .enter-btn { padding: 12px 60px; border: 1.5px solid #a5b8d0; border-radius: 35px; background: white; color: #a5b8d0; text-decoration: none; font-size: 0.75rem; font-weight: bold; letter-spacing: 3px; }
+    </style>
+</head>
+<body>
+    <div class="img-container">
+        <button id="bgmBtn" class="bgm-btn">🎵</button>
+    </div>
+    <div class="sub-title">ETERNAL SUNSHINE</div>
+    <a href="menu.html" class="enter-btn">ENTER</a>
+
+    <audio id="bgm" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const bgm = document.getElementById('bgm');
+        const btn = document.getElementById('bgmBtn');
+        let playing = false;
+
+        btn.onclick = () => {
+            if(!playing) { bgm.play(); btn.innerText = '🔊'; }
+            else { bgm.pause(); btn.innerText = '🎵'; }
+            playing = !playing;
+        };
+        // 브라우저 정책상 첫 클릭 시 자동재생 시도
+        window.onclick = () => { if(!playing) { bgm.play(); btn.innerText = '🔊'; playing = true; } };
+    </script>
+</body>
+</html>
