@@ -5,43 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAN JI WOO x CHO YOON</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Apple SD Gothic Neo', sans-serif; background-color: #f0f2f5; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #f0f2f5; font-family: 'Apple SD Gothic Neo', sans-serif; }
 
-        /* [1] 인트로 영상 레이어 */
+        /* [1] 인트로 영상 레이어 (검은 배경) */
         #intro-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1000; background: #000; cursor: pointer;
+            z-index: 1000; background: #000; display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
-        .intro-video { width: 100%; height: 100%; object-fit: contain; } /* 영상 비율 유지 */
+        .intro-video { max-width: 100%; max-height: 100%; }
+        .play-msg { position: absolute; color: white; font-size: 1.2rem; letter-spacing: 5px; animation: blink 2s infinite; }
 
-        /* [2] 쫌좀님이 찾으시던 그 메인 화면 (1.JPG 스타일) */
+        /* [2] 쪼좀님이 원하시는 원본 대문 (1.JPG) */
         #main-content {
             display: none; width: 100%; height: 100%;
-            background: url('1.JPG') no-repeat center center; /* 1.JPG를 배경으로 */
+            background: url('1.JPG') no-repeat center center;
             background-size: cover;
             flex-direction: column; justify-content: center; align-items: center;
         }
 
-        /* 1.JPG 화면에 있던 ENTER 버튼 스타일 */
+        /* ENTER 버튼 위치 및 스타일 (1.JPG 기준) */
         .enter-btn {
-            margin-top: 350px; /* 1.JPG 이미지 버튼 위치에 맞게 조절 */
-            padding: 10px 40px;
+            margin-top: 320px;
+            padding: 12px 45px;
             border: 2px solid #a5b8d0;
-            border-radius: 30px;
-            background: rgba(255,255,255,0.8);
+            border-radius: 35px;
+            background: rgba(255,255,255,0.9);
             color: #a5b8d0;
             text-decoration: none;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             transition: 0.3s;
         }
         .enter-btn:hover { background: #a5b8d0; color: white; }
+
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 0.8; } }
     </style>
 </head>
 <body>
 
-    <div id="intro-layer" onclick="showMain()">
-        <video id="myVideo" autoplay playsinline class="intro-video">
+    <div id="intro-layer" onclick="startVideo()">
+        <div id="msg" class="play-msg">CLICK TO PLAY</div>
+        <video id="myVideo" playsinline class="intro-video" style="display:none;">
             <source src="promo.mp4" type="video/mp4">
         </video>
     </div>
@@ -54,22 +58,27 @@
         const video = document.getElementById('myVideo');
         const intro = document.getElementById('intro-layer');
         const main = document.getElementById('main-content');
+        const msg = document.getElementById('msg');
 
-        // 메인 화면으로 전환하는 함수
-        function showMain() {
-            intro.style.display = 'none';
-            main.style.display = 'flex';
-            video.pause(); // 영상 멈춤
+        // 1. 클릭하면 소리와 함께 영상 시작
+        function startVideo() {
+            msg.style.display = 'none';
+            video.style.display = 'block';
+            video.muted = false; // 소리 켜기
+            video.play();
         }
 
-        // 영상이 끝나면 자동으로 메인 이동
+        // 2. 영상이 끝나면 '원본 대문'으로 자동 전환
         video.onended = function() {
-            showMain();
+            intro.style.display = 'none';
+            main.style.display = 'flex';
         };
 
-        // 브라우저 정책상 첫 소리는 클릭이 필요할 수 있어 안내
-        window.onclick = function() {
-            video.muted = false; // 화면 어디든 클릭하면 소리 켜짐
+        // 혹시 중간에 넘어가고 싶으면 화면 더블클릭
+        intro.ondblclick = function() {
+            video.pause();
+            intro.style.display = 'none';
+            main.style.display = 'flex';
         }
     </script>
 
