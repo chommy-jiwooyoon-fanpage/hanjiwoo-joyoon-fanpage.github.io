@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <title>HAN JI WOO FILMOGRAPHY</title>
     <style>
-        /* 16번 조윤 페이지와 1:1 대응하는 오리지널 스타일 */
+        /* 우리가 함께 맞췄던 16번 조윤 페이지의 오리지널 스타일 그대로 */
         body { margin: 0; padding: 0; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; }
 
-        /* 좌측 상단 메뉴바 위치 복구 */
+        /* 좌측 상단 메뉴바 (16번 사진 위치와 동일) */
         .side-nav { position: fixed; left: 20px; top: 25px; display: flex; flex-direction: column; gap: 12px; z-index: 10000; }
         .top-menu-bar { width: 90px; height: 35px; background: white; border-radius: 18px; display: flex; align-items: center; justify-content: space-around; padding: 0 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.01); font-size: 0.7rem; color: #b0c4de; font-weight: bold; }
         .icon-circle { width: 42px; height: 42px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); text-decoration: none; }
         .icon-circle img { width: 20px; height: 20px; object-fit: contain; }
 
-        /* 중앙 한지우 텍스트 및 버튼 레이아웃 */
+        /* 중앙 한지우 텍스트 및 버튼 레이아웃 복구 */
         .main-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; }
         .actor-name { font-size: 1.35rem; color: #a5b8d0; font-weight: 800; letter-spacing: 12px; margin-bottom: 80px; text-transform: uppercase; }
         
         .film-wrapper { display: flex; gap: 90px; align-items: center; }
         .film-item { display: flex; flex-direction: column; align-items: center; gap: 30px; text-decoration: none; }
         
-        /* 16번 사진의 그 부드러운 입체감(뉴모피즘) 버튼 */
+        /* 16번 조윤 페이지의 그 부드러운 입체감(뉴모피즘) 버튼 디자인 */
         .film-circle { 
             width: 110px; height: 110px; background: #f0f4f8; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
@@ -28,13 +28,13 @@
             transition: all 0.4s ease;
         }
         
-        /* 중앙 마름모/원형 포인트 색상 및 크기 */
+        /* 중앙 포인트 색상 및 크기 (달라.JPG에서 확인된 오리지널 형태) */
         .inner-dot { width: 26px; height: 26px; background: #b0c4de; border-radius: 7px; transform: rotate(45deg); }
         .inner-circle { width: 26px; height: 26px; background: #b0c4de; border-radius: 50%; }
 
         .film-label { font-size: 0.75rem; color: #9ab0c9; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; }
 
-        /* 우측 하단 BGM 블랙 버튼 */
+        /* 우측 하단 BGM 블랙 버튼 고정 */
         .bgm-controls { position: fixed; right: 25px; bottom: 30px; display: flex; gap: 10px; z-index: 10000; }
         .bgm-btn { width: 45px; height: 45px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
 
