@@ -2,60 +2,40 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>ACTOR LIST</title>
+    <title>HAN JI WOO FILMOGRAPHY</title>
     <style>
-        body { margin: 0; padding: 0; background: #f4f7f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', sans-serif; }
+        body { margin: 0; padding: 0; background: #f4f7f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; }
 
-        /* [핵심] 좌측 상단 메뉴 위치 - 메인 화면(11번 사진)과 100% 일치 */
-        .side-nav { 
-            position: fixed; 
-            left: 18px; 
-            top: 22px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-            z-index: 10000; 
-        }
-
-        .top-menu-bar {
-            width: 95px; height: 38px; 
-            background: white; border-radius: 20px; 
-            display: flex; align-items: center; justify-content: space-around;
-            padding: 0 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-            font-size: 0.75rem; color: #a5b8d0; font-weight: bold;
-            margin-bottom: 2px;
-        }
-
-        .icon-circle { 
-            width: 44px; height: 44px; 
-            background: white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            text-decoration: none;
-        }
+        /* [고정] 좌측 상단 메뉴 & 우측 하단 BGM - 11번 사진과 1:1 일치 */
+        .side-nav { position: fixed; left: 18px; top: 22px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
+        .top-menu-bar { width: 95px; height: 38px; background: white; border-radius: 20px; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); font-size: 0.75rem; color: #a5b8d0; font-weight: bold; }
+        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; }
         .icon-circle img { width: 22px; height: 22px; object-fit: contain; }
 
-        /* [핵심] 우측 하단 BGM - 메인 화면의 시크한 블랙 버튼 복제 */
         .bgm-controls { position: fixed; right: 20px; bottom: 25px; display: flex; gap: 8px; z-index: 10000; }
-        .bgm-btn { 
-            width: 42px; height: 42px; 
-            background: #111; 
-            border-radius: 50%; border: none; color: white; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
+        .bgm-btn { width: 42px; height: 42px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 
-        /* 배우 리스트 전용 스타일 */
-        .content-container { margin-top: 100px; width: 90%; max-width: 800px; text-align: center; }
-        .page-title { font-size: 1.5rem; color: #a5b8d0; font-weight: 800; letter-spacing: 5px; margin-bottom: 50px; }
+        /* [복구] 14번 사진의 원형 필모그래피 UI 그대로 */
+        .main-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; }
+        .actor-name { font-size: 1.4rem; color: #a5b8d0; font-weight: 800; letter-spacing: 8px; margin-bottom: 60px; text-transform: uppercase; }
         
-        /* 리스트 카드 (예시) */
-        .actor-card { background: white; border-radius: 20px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 20px; }
-        .actor-photo { width: 100px; height: 100px; background: #eee; border-radius: 50%; overflow: hidden; }
-        .actor-info { text-align: left; }
-        .actor-name { font-size: 1.1rem; color: #555; font-weight: 700; }
+        .film-wrapper { display: flex; gap: 60px; align-items: center; }
+        .film-item { display: flex; flex-direction: column; align-items: center; gap: 20px; text-decoration: none; }
+        
+        /* 14번 사진의 부드러운 원형 버튼 디자인 */
+        .film-circle { 
+            width: 90px; height: 90px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease;
+        }
+        .film-circle:hover { transform: scale(1.05); }
+        .inner-dot { width: 24px; height: 24px; background: #a5b8d0; border-radius: 6px; transform: rotate(45deg); } /* Cadenza 마름모 */
+        .inner-circle { width: 24px; height: 24px; background: #a5b8d0; border-radius: 50%; } /* Check-in 원형 */
 
-        .back-link { position: fixed; bottom: 40px; text-decoration: none; color: #a5b8d0; font-size: 0.8rem; font-weight: 800; }
+        .film-label { font-size: 0.75rem; color: #a5b8d0; font-weight: 800; letter-spacing: 2px; }
+
+        .back-link { position: fixed; bottom: 40px; text-decoration: none; color: #a5b8d0; font-size: 0.75rem; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -71,19 +51,23 @@
         <button class="bgm-btn">✖</button>
     </div>
 
-    <div class="content-container">
-        <h1 class="page-title">FILMOGRAPHY</h1>
+    <div class="main-content">
+        <div class="actor-name">HAN JI WOO</div>
         
-        <div class="actor-card">
-            <div class="actor-photo"></div>
-            <div class="actor-info">
-                <div class="actor-name">HAN JI WOO</div>
-                <div style="color: #aaa; font-size: 0.85rem; margin-top: 5px;">대표작: Cadenza, Check-in</div>
-            </div>
+        <div class="film-wrapper">
+            <a href="film-detail.html" target="_blank" class="film-item">
+                <div class="film-circle"><div class="inner-dot"></div></div>
+                <div class="film-label">Cadenza</div>
+            </a>
+            
+            <a href="film-detail.html" target="_blank" class="film-item">
+                <div class="film-circle"><div class="inner-circle"></div></div>
+                <div class="film-label">Check-in</div>
+            </a>
         </div>
     </div>
 
-    <a href="menu.html" class="back-link">← BACK TO MENU</a>
+    <a href="menu.html" class="back-link">← SELECT ACTOR</a>
 
 </body>
 </html>
