@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAN JIWOO FANPAGE</title>
     <style>
-        /* [1] 배경 영상 설정 */
         .video-background {
             position: fixed;
             right: 0;
@@ -13,11 +12,9 @@
             min-width: 100%;
             min-height: 100%;
             z-index: -1;
-            filter: brightness(0.6); /* 지우님이 잘 보이면서 글자도 잘 보이게 조절 */
+            filter: brightness(0.6);
             object-fit: cover;
         }
-
-        /* [2] 메인 레이아웃 */
         body {
             margin: 0;
             padding: 0;
@@ -30,26 +27,9 @@
             overflow: hidden;
             color: white;
         }
-
-        .main-content {
-            text-align: center;
-            z-index: 1;
-        }
-
-        .main-title {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: 15px;
-            margin-bottom: 50px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        /* [3] 세련된 메뉴 버튼 */
-        .menu-container {
-            display: flex;
-            gap: 30px;
-        }
-
+        .main-content { text-align: center; z-index: 1; }
+        .main-title { font-size: 3rem; font-weight: 800; letter-spacing: 15px; margin-bottom: 50px; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .menu-container { display: flex; gap: 30px; }
         .menu-btn {
             text-decoration: none;
             color: white;
@@ -63,21 +43,21 @@
             backdrop-filter: blur(5px);
             transition: 0.4s;
         }
-
-        .menu-btn:hover {
-            background: white;
-            color: #a5b8d0;
-            transform: translateY(-5px);
-        }
-
-        /* 하단 푸터 (쫌좀님 닉네임 박제!) */
-        .footer {
-            position: absolute;
-            bottom: 30px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            opacity: 0.6;
-        }
+        .menu-btn:hover { background: white; color: #a5b8d0; transform: translateY(-5px); }
+        .footer { position: absolute; bottom: 30px; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6; }
     </style>
 </head>
 <body>
+    <video autoplay muted loop playsinline class="video-background">
+        <source src="promo.mp4" type="video/mp4">
+    </video>
+    <div class="main-content">
+        <div class="main-title">HAN JIWOO</div>
+        <div class="menu-container">
+            <a href="jiwoo-list.html" class="menu-btn">VIDEO LIST</a>
+            <a href="guestbook.html" class="menu-btn">GUESTBOOK</a>
+        </div>
+    </div>
+    <div class="footer">VIDEO BY @ZZOMZOM_ | ALL FOR JIWOO</div>
+</body>
+</html>
