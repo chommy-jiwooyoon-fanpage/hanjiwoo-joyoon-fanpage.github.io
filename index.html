@@ -37,7 +37,6 @@
 
         .sub-title { font-size: 0.8rem; color: #a5b8d0; letter-spacing: 6px; margin-bottom: 40px; text-transform: uppercase; }
 
-        /* ENTER 버튼: 쫌좀님 파일 목록에 있는 menu.html로 연결 */
         .enter-btn {
             padding: 10px 50px; border: 1.5px solid #a5b8d0; border-radius: 30px;
             background: white; color: #a5b8d0; text-decoration: none;
@@ -48,10 +47,11 @@
 </head>
 <body>
 
-    <div id="intro-layer" onclick="showMain()">
-        <video id="myVideo" autoplay playsinline class="intro-video">
+    <div id="intro-layer" onclick="enableAudio()">
+        <video id="myVideo" autoplay muted playsinline class="intro-video">
             <source src="promo.mp4" type="video/mp4">
         </video>
+        <div style="position:absolute; color:white; bottom:20px; font-size:0.8rem; opacity:0.5;">화면을 클릭하면 소리가 나옵니다</div>
     </div>
 
     <audio id="bgm" loop><source src="bgm.mp3" type="audio/mpeg"></audio>
@@ -69,17 +69,31 @@
         const intro = document.getElementById('intro-layer');
         const main = document.getElementById('main-content');
 
+        // 세션 확인: 이번 접속에 이미 봤다면 영상 스킵
         const hasSeenIntro = sessionStorage.getItem('visited');
 
         if (!hasSeenIntro) {
             intro.style.display = 'flex';
             sessionStorage.setItem('visited', 'true');
         } else {
+            // 이미 방문했다면 영상 레이어 아예 삭제 (소리 겹침 방지)
+            intro.remove(); 
             main.style.display = 'flex';
+        }
+
+        // 클릭 시 소리 켜고 영상 계속 재생
+        function enableAudio() {
+            video.muted = false;
+            // 만약 영상이 끝나기 전에 클릭했다면 메인으로 넘기지 않고 소리만 켬
+            // 영상이 거의 끝났을 때 클릭하면 바로 메인으로 이동
+            if (video.currentTime > video.duration - 0.5) {
+                showMain();
+            }
         }
 
         function showMain() {
             video.pause();
+            video.src = ""; // 영상 소스 제거 (뒤로 가기 시 소리 안 나게 확실히 차단)
             intro.style.display = 'none';
             main.style.display = 'flex';
             bgm.play().catch(e => {});
