@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HAN JI WOO x CHO YOON</title>
     <style>
-        /* 배경을 예전처럼 아주 연한 회색/하늘색 톤으로 설정 */
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #ebf1f6; font-family: 'Apple SD Gothic Neo', sans-serif; }
 
         /* [1] 인트로 영상 레이어 */
@@ -15,45 +14,48 @@
         }
         .intro-video { max-width: 100%; max-height: 100%; }
 
-        /* [2] 쪼좀님이 원하시는 예전 대문 디자인 (1.JPG 비율) */
+        /* [2] 메인 대문 디자인 (1.JPG 비율) */
         #main-content {
             display: none; width: 100%; height: 100%;
             flex-direction: column; justify-content: center; align-items: center;
         }
 
+        .bgm-controls { position: absolute; top: 30px; left: 30px; display: flex; align-items: center; gap: 10px; }
+        .bgm-btn {
+            background: rgba(255, 255, 255, 0.8); border: 1px solid #ddd;
+            border-radius: 20px; padding: 5px 15px; font-size: 0.7rem;
+            color: #a5b8d0; cursor: pointer; letter-spacing: 1px;
+        }
+
         .img-container {
-            width: 480px; /* 1.JPG의 아담한 가로 크기 */
-            height: 270px; /* 16:9 비율 유지 */
-            background: url('main.jpg') no-repeat center center; /* 폴더의 main.jpg 사용 */
-            background-size: cover;
-            border: 8px solid white; /* 흰색 테두리 */
-            border-radius: 30px; /* 둥근 모서리 */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); /* 은은한 그림자 */
+            width: 480px; height: 270px;
+            background: url('main.jpg') no-repeat center center;
+            background-size: cover; border: 8px solid white;
+            border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             margin-bottom: 30px;
         }
 
-        .sub-title {
-            font-size: 0.8rem; color: #a5b8d0; letter-spacing: 6px;
-            margin-bottom: 40px; text-transform: uppercase; font-weight: 300;
-        }
-
+        .sub-title { font-size: 0.8rem; color: #a5b8d0; letter-spacing: 6px; margin-bottom: 40px; text-transform: uppercase; }
         .enter-btn {
             padding: 10px 50px; border: 1.5px solid #a5b8d0; border-radius: 30px;
             background: white; color: #a5b8d0; text-decoration: none;
-            font-size: 0.75rem; font-weight: bold; letter-spacing: 3px; transition: 0.3s;
+            font-size: 0.75rem; font-weight: bold; letter-spacing: 3px;
         }
-        .enter-btn:hover { background: #a5b8d0; color: white; }
     </style>
 </head>
 <body>
 
     <div id="intro-layer" onclick="showMain()">
-        <video id="myVideo" autoplay muted playsinline class="intro-video">
+        <video id="myVideo" autoplay playsinline class="intro-video">
             <source src="promo.mp4" type="video/mp4">
         </video>
     </div>
 
+    <audio id="bgm" loop>
+        <source src="bgm.mp3" type="audio/mpeg"> </audio>
+
     <div id="main-content">
+        <div class="bgm-controls"><div class="bgm-btn">||| &nbsp; 01 &nbsp; →</div></div>
         <div class="img-container"></div>
         <div class="sub-title">ETERNAL SUNSHINE</div>
         <a href="jiwoo-list.html" class="enter-btn">ENTER</a>
@@ -61,13 +63,18 @@
 
     <script>
         const video = document.getElementById('myVideo');
+        const bgm = document.getElementById('bgm');
         const intro = document.getElementById('intro-layer');
         const main = document.getElementById('main-content');
 
+        // 메인으로 전환되면서 BGM 시작하는 함수
         function showMain() {
+            video.pause(); // 영상 소리 즉시 끔
             intro.style.display = 'none';
             main.style.display = 'flex';
-            video.pause();
+            
+            // 영상이 끝나거나 클릭했을 때만 BGM 재생 시작
+            bgm.play().catch(e => console.log("자동재생 방지로 클릭 후 재생됨"));
         }
 
         video.onended = function() { showMain(); };
