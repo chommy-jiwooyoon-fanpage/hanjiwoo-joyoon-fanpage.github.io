@@ -4,67 +4,71 @@
     <meta charset="UTF-8">
     <title>HAN JI WOO FILMOGRAPHY</title>
     <style>
-        body { margin: 0; padding: 0; background: #f4f7f9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; }
+        /* 16번 사진의 전체적인 톤과 여백 그대로 유지 */
+        body { margin: 0; padding: 0; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; font-family: 'Apple SD Gothic Neo', sans-serif; overflow: hidden; }
 
-        /* [고정] 좌측 상단 메뉴 & 우측 하단 BGM - 11번 사진과 1:1 일치 */
-        .side-nav { position: fixed; left: 18px; top: 22px; display: flex; flex-direction: column; gap: 10px; z-index: 10000; }
-        .top-menu-bar { width: 95px; height: 38px; background: white; border-radius: 20px; display: flex; align-items: center; justify-content: space-around; padding: 0 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); font-size: 0.75rem; color: #a5b8d0; font-weight: bold; }
-        .icon-circle { width: 44px; height: 44px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); text-decoration: none; }
-        .icon-circle img { width: 22px; height: 22px; object-fit: contain; }
+        /* 좌측 상단 메뉴 (16번 사진 위치) */
+        .side-nav { position: fixed; left: 20px; top: 25px; display: flex; flex-direction: column; gap: 12px; z-index: 10000; }
+        .top-menu-bar { width: 90px; height: 35px; background: white; border-radius: 18px; display: flex; align-items: center; justify-content: space-around; padding: 0 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.01); font-size: 0.7rem; color: #b0c4de; font-weight: bold; }
+        .icon-circle { width: 42px; height: 42px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); text-decoration: none; }
+        .icon-circle img { width: 20px; height: 20px; object-fit: contain; }
 
-        .bgm-controls { position: fixed; right: 20px; bottom: 25px; display: flex; gap: 8px; z-index: 10000; }
-        .bgm-btn { width: 42px; height: 42px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-
-        /* [복구] 14번 사진의 원형 필모그래피 UI 그대로 */
+        /* 중앙 컨텐츠 (16번 사진의 정중앙 배치) */
         .main-content { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; }
-        .actor-name { font-size: 1.4rem; color: #a5b8d0; font-weight: 800; letter-spacing: 8px; margin-bottom: 60px; text-transform: uppercase; }
+        .actor-name { font-size: 1.3rem; color: #a5b8d0; font-weight: 800; letter-spacing: 10px; margin-bottom: 70px; }
         
-        .film-wrapper { display: flex; gap: 60px; align-items: center; }
-        .film-item { display: flex; flex-direction: column; align-items: center; gap: 20px; text-decoration: none; }
+        .film-wrapper { display: flex; gap: 80px; align-items: center; }
+        .film-item { display: flex; flex-direction: column; align-items: center; gap: 25px; text-decoration: none; }
         
-        /* 14번 사진의 부드러운 원형 버튼 디자인 */
+        /* 16번 사진 특유의 부드러운 뉴모피즘 원형 버튼 */
         .film-circle { 
-            width: 90px; height: 90px; background: white; border-radius: 50%; 
+            width: 100px; height: 100px; background: #f0f4f8; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 15px 40px rgba(0,0,0,0.05); 
-            transition: transform 0.3s ease;
+            box-shadow: 10px 10px 20px #d1d9e6, -10px -10px 20px #ffffff; /* 16번의 부드러운 그림자 */
+            transition: all 0.3s ease;
         }
-        .film-circle:hover { transform: scale(1.05); }
-        .inner-dot { width: 24px; height: 24px; background: #a5b8d0; border-radius: 6px; transform: rotate(45deg); } /* Cadenza 마름모 */
-        .inner-circle { width: 24px; height: 24px; background: #a5b8d0; border-radius: 50%; } /* Check-in 원형 */
+        
+        /* 중앙 아이콘 모양 (16번 사진과 동일) */
+        .inner-dot { width: 28px; height: 28px; background: #b0c4de; border-radius: 8px; transform: rotate(45deg); opacity: 0.8; } /* 마름모 */
+        .inner-circle { width: 28px; height: 28px; background: #b0c4de; border-radius: 50%; opacity: 0.8; } /* 원형 */
 
-        .film-label { font-size: 0.75rem; color: #a5b8d0; font-weight: 800; letter-spacing: 2px; }
+        .film-label { font-size: 0.7rem; color: #9ab0c9; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; }
 
-        .back-link { position: fixed; bottom: 40px; text-decoration: none; color: #a5b8d0; font-size: 0.75rem; font-weight: 800; }
+        /* 우측 하단 BGM 버튼 (15번 사진의 블랙 버튼 위치) */
+        .bgm-controls { position: fixed; right: 25px; bottom: 30px; display: flex; gap: 10px; z-index: 10000; }
+        .bgm-btn { width: 45px; height: 45px; background: #111; border-radius: 50%; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 1.1rem; }
+
+        /* 하단 뒤로가기 링크 */
+        .back-link { position: fixed; bottom: 30px; text-decoration: none; color: #b0c4de; font-size: 0.65rem; font-weight: 800; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div class="side-nav">
         <div class="top-menu-bar"><span>|||</span> <span>01</span> <span>→</span></div>
-        <a href="index.html" class="icon-circle"><img src="home.png"></a> 
-        <a href="guestbook.html" class="icon-circle"><img src="board.png"></a> 
-    </div>
-
-    <div class="bgm-controls">
-        <button class="bgm-btn">🎵</button>
-        <button class="bgm-btn">✖</button>
+        <a href="index.html" class="icon-circle"><img src="home.png" onerror="this.src='https://img.icons8.com/color/48/home--v1.png'"></a> 
+        <a href="guestbook.html" class="icon-circle"><img src="board.png" onerror="this.src='https://img.icons8.com/color/48/edit-file.png'"></a> 
     </div>
 
     <div class="main-content">
         <div class="actor-name">HAN JI WOO</div>
         
         <div class="film-wrapper">
-            <a href="film-detail.html" target="_blank" class="film-item">
+            <a href="cadenza-detail.html" target="_blank" class="film-item">
                 <div class="film-circle"><div class="inner-dot"></div></div>
                 <div class="film-label">Cadenza</div>
             </a>
             
-            <a href="film-detail.html" target="_blank" class="film-item">
+            <a href="checkin-detail.html" target="_blank" class="film-item">
                 <div class="film-circle"><div class="inner-circle"></div></div>
                 <div class="film-label">Check-in</div>
             </a>
         </div>
+    </div>
+
+    <div class="bgm-controls">
+        <button class="bgm-btn">🎵</button>
+        <button class="bgm-btn">✖</button>
     </div>
 
     <a href="menu.html" class="back-link">← SELECT ACTOR</a>
