@@ -2,54 +2,63 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAN JI WOO x CHO YOON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>HAN JI WOO x CHO YOON</title>
     <style>
-        /* 기본 배경 설정 */
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #ebf1f6; font-family: 'Apple SD Gothic Neo', sans-serif; }
 
-        /* [1] 인트로 영상 레이어 (검은 배경) */
+        /* [1] 인트로 영상 레이어 */
         #intro-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1000; background: #000; display: none; justify-content: center; align-items: center;
         }
-        .intro-video { max-width: 100%; max-height: 100%; cursor: pointer; }
+        /* 영상이 모바일 화면을 벗어나지 않도록 설정 */
+        .intro-video { width: 100%; height: auto; max-width: 100%; max-height: 100%; cursor: pointer; }
 
-        /* [2] 메인 대문 디자인 (쫌좀님이 원하신 1.JPG 아담한 비율) */
+        /* [2] 메인 대문 디자인 */
         #main-content {
             display: none; width: 100%; height: 100%;
             flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; box-sizing: border-box;
         }
 
-        /* 왼쪽 상단 BGM 아이콘 복구 */
+        /* BGM 아이콘: 모바일에서도 구석에 잘 보이도록 조정 */
         .bgm-controls {
-            position: absolute; top: 30px; left: 30px;
+            position: absolute; top: 20px; left: 20px;
             display: flex; align-items: center; gap: 10px;
         }
         .bgm-btn {
             background: rgba(255, 255, 255, 0.8); border: 1px solid #ddd;
-            border-radius: 20px; padding: 5px 15px; font-size: 0.7rem;
+            border-radius: 20px; padding: 5px 12px; font-size: 0.65rem;
             color: #a5b8d0; cursor: pointer; letter-spacing: 1px;
         }
 
-        /* 메인 사진 박스 (main.jpg 사용) */
+        /* [중요] 반응형 이미지 컨테이너 */
         .img-container {
-            width: 480px; height: 270px;
+            width: 90%; /* 모바일에서는 화면 폭의 90% */
+            max-width: 480px; /* PC 등 큰 화면에서는 최대 480px */
+            aspect-ratio: 16 / 9; /* 1.JPG의 비율 유지 */
             background: url('main.jpg') no-repeat center center;
-            background-size: cover; border: 8px solid white;
-            border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            background-size: cover; border: 6px solid white;
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
         }
 
-        .sub-title { font-size: 0.8rem; color: #a5b8d0; letter-spacing: 6px; margin-bottom: 40px; text-transform: uppercase; }
+        .sub-title { font-size: 0.75rem; color: #a5b8d0; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; text-align: center; }
 
-        /* ENTER 버튼 (menu.html 연결) */
+        /* ENTER 버튼: 모바일 터치하기 편하게 조정 */
         .enter-btn {
-            padding: 10px 50px; border: 1.5px solid #a5b8d0; border-radius: 30px;
+            padding: 10px 40px; border: 1.5px solid #a5b8d0; border-radius: 30px;
             background: white; color: #a5b8d0; text-decoration: none;
-            font-size: 0.75rem; font-weight: bold; letter-spacing: 3px; transition: 0.3s;
+            font-size: 0.7rem; font-weight: bold; letter-spacing: 2px; transition: 0.3s;
         }
-        .enter-btn:hover { background: #a5b8d0; color: white; }
+
+        /* PC용 큰 화면에서만 적용되는 스타일 */
+        @media (min-width: 768px) {
+            .img-container { border-width: 8px; border-radius: 30px; }
+            .sub-title { font-size: 0.8rem; letter-spacing: 6px; }
+            .enter-btn { font-size: 0.75rem; padding: 10px 50px; }
+            .bgm-btn { padding: 5px 15px; font-size: 0.7rem; }
+        }
     </style>
 </head>
 <body>
@@ -77,38 +86,32 @@
         const intro = document.getElementById('intro-layer');
         const main = document.getElementById('main-content');
 
-        // 1. 인트로 기억 기능 (세션 체크)
         const hasSeenIntro = sessionStorage.getItem('visited');
 
         if (!hasSeenIntro) {
             intro.style.display = 'flex';
             sessionStorage.setItem('visited', 'true');
         } else {
-            intro.remove(); // 이미 봤다면 영상 요소 완전 삭제 (소리 중첩 방지)
+            intro.remove(); 
             main.style.display = 'flex';
         }
 
-        // 2. 영상 클릭 핸들러 (소리 켜기 / 메인 이동)
         function handleVideoClick() {
             if (video.muted) {
-                video.muted = false; // 첫 클릭 시 소리 활성화
+                video.muted = false;
             } else {
-                showMain(); // 소리 켜진 후 클릭 시 메인으로 이동
+                showMain();
             }
         }
 
-        // 3. 메인 화면 전환 및 소리 분리 로직
         function showMain() {
             video.pause();
-            video.src = ""; // [핵심] 영상 소스 삭제하여 BGM과 절대 안 겹치게 함
+            video.src = ""; 
             intro.style.display = 'none';
             main.style.display = 'flex';
-            
-            // 영상이 확실히 멈춘 뒤 BGM 재생
-            bgm.play().catch(e => console.log("BGM 재생 대기"));
+            bgm.play().catch(e => {});
         }
 
-        // 영상 재생 완료 시 자동 전환
         video.onended = function() { showMain(); };
     </script>
 </body>
