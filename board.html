@@ -7,7 +7,7 @@
     <style>
         body { margin: 0; background-color: #ebf1f6; font-family: 'Apple SD Gothic Neo', sans-serif; }
         .nav-bar { display: flex; padding: 20px; max-width: 600px; margin: 0 auto; }
-        .home-icon { font-size: 1.2rem; text-decoration: none; }
+        .home-icon { font-size: 1.2rem; text-decoration: none; cursor: pointer; }
         .board-container { width: 92%; max-width: 600px; margin: 10px auto; padding: 25px; background: white; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); box-sizing: border-box; }
         .board-title { color: #a5b8d0; text-align: center; letter-spacing: 5px; font-size: 1.1rem; margin-bottom: 25px; font-weight: 300; }
         .input-box { width: 100%; padding: 18px; border: 1px solid #f0f4f8; border-radius: 20px; font-size: 0.9rem; outline: none; background: #f9fbfc; box-sizing: border-box; color: #666; margin-bottom: 12px; resize: none; }
@@ -20,7 +20,9 @@
     </style>
 </head>
 <body>
-    <div class="nav-bar"><a href="menu.html" class="home-icon">🏠</a></div>
+    <div class="nav-bar">
+        <a href="main_gate.html" class="home-icon">🏠</a> 
+    </div>
     <div class="board-container">
         <h2 class="board-title">GUEST BOOK</h2>
         <textarea id="postInput" class="input-box" rows="3" placeholder="지우님께 한마디 남겨주세요!"></textarea>
@@ -32,6 +34,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+    // 쫌좀님의 실제 파이어베이스 설정값 반영
     const firebaseConfig = {
         apiKey: "AIzaSyDXz0NasgyMsWtlXriyqocMF1Tqe2FJXkg",
         authDomain: "jiwoo-fan.firebaseapp.com",
@@ -45,6 +48,7 @@
     const db = getFirestore(app);
     const postsCol = collection(db, "posts");
 
+    // [등록 기능]
     document.getElementById('saveBtn').onclick = async () => {
         const content = document.getElementById('postInput').value;
         if (!content.trim()) return;
@@ -52,6 +56,7 @@
         document.getElementById('postInput').value = "";
     };
 
+    // [실시간 조회 & 날짜 표시]
     onSnapshot(query(postsCol, orderBy("createdAt", "desc")), (snapshot) => {
         const list = document.getElementById('post-list');
         list.innerHTML = "";
@@ -60,12 +65,19 @@
             const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('ko-KR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : "방금 전";
             const card = document.createElement('div');
             card.className = 'post-card';
-            card.innerHTML = `<p class="post-content">${data.text}</p><div class="post-info"><span>${date}</span><button class="del-btn" onclick="deletePost('${p.id}')">삭제</button></div>`;
+            card.innerHTML = `
+                <p class="post-content">${data.text}</p>
+                <div class="post-info">
+                    <span>${date}</span>
+                    <button class="del-btn" onclick="deletePost('${p.id}')">삭제</button>
+                </div>
+            `;
             list.appendChild(card);
         });
     });
 
-    window.deletePost = async (id) => { if(confirm("삭제하시겠습니까?")) await deleteDoc(doc(db, "posts", id)); };
+    // [삭제 기능]
+    window.deletePost = async (id) => { if(confirm("정말 삭제하시겠습니까?")) await deleteDoc(doc(db, "posts", id)); };
 </script>
 </body>
 </html>
