@@ -52,8 +52,7 @@
     document.getElementById('saveBtn').onclick = async () => {
         const content = document.getElementById('postInput').value;
         const pw = document.getElementById('pwInput').value;
-        if (!content.trim() || !pw.trim()) { alert("내용과 비밀번호를 모두 입력해주세요."); return; }
-        
+        if (!content.trim() || !pw.trim()) { alert("내용과 비밀번호를 입력해주세요."); return; }
         await addDoc(postsCol, { text: content, password: pw, createdAt: serverTimestamp() });
         document.getElementById('postInput').value = "";
         document.getElementById('pwInput').value = "";
@@ -64,7 +63,7 @@
         list.innerHTML = "";
         snapshot.forEach((p) => {
             const data = p.data();
-            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString() : "방금 전";
+            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('ko-KR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}) : "방금 전";
             const card = document.createElement('div');
             card.className = 'post-card';
             card.innerHTML = `<p class="post-content">${data.text}</p><div class="post-info"><span>${date}</span><button class="del-btn" onclick="deleteWithPw('${p.id}', '${data.password}')">삭제</button></div>`;
